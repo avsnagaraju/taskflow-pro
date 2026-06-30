@@ -15,9 +15,15 @@ interface ClerkUserEvent {
 export async function handleClerkWebhook(req: Request, res: Response) {
   const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET!)
 
+  // req.body is a raw Buffer (express.raw middleware) — svix needs the original bytes
+  const rawBody = req.body as Buffer
+  if (!Buffer.isBuffer(rawBody)) {
+    return res.status(400).json({ error: 'Raw body required' })
+  }
+
   let event: ClerkUserEvent
   try {
-    event = wh.verify(JSON.stringify(req.body), {
+    event = wh.verify(rawBody, {
       'svix-id': req.headers['svix-id'] as string,
       'svix-timestamp': req.headers['svix-timestamp'] as string,
       'svix-signature': req.headers['svix-signature'] as string,

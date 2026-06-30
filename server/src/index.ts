@@ -17,7 +17,8 @@ app.post(
   handleStripeWebhook,
 )
 
-app.post('/api/webhooks/clerk', express.json(), handleClerkWebhook)
+// Clerk webhooks also need raw body for svix signature verification
+app.post('/api/webhooks/clerk', express.raw({ type: 'application/json' }), handleClerkWebhook)
 
 // Standard middleware
 app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }))

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import api from '../lib/api'
 import type { UserProfile } from '../lib/types'
@@ -8,18 +8,20 @@ export function useProfile() {
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const fetchProfile = async () => {
+  // useCallback keeps the same reference across renders so SuccessPage's
+  // useEffect doesn't re-fire on every render cycle
+  const fetchProfile = useCallback(async () => {
     try {
       const { data } = await api.get<UserProfile>('/users/me')
       setProfile(data)
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
     if (isLoaded && isSignedIn) fetchProfile()
-  }, [isLoaded, isSignedIn])
+  }, [isLoaded, isSignedIn, fetchProfile])
 
   const startCheckout = async () => {
     const { data } = await api.post<{ url: string }>('/payments/checkout')

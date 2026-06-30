@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { stripe, PREMIUM_PRICE_ID } from '../lib/stripe'
+import { stripe, getPriceId } from '../lib/stripe'
 import { prisma } from '../lib/prisma'
 import { requireAuth, AuthRequest } from '../middleware/auth'
 
@@ -14,7 +14,7 @@ router.post('/checkout', requireAuth, async (req: AuthRequest, res) => {
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
     payment_method_types: ['card'],
-    line_items: [{ price: PREMIUM_PRICE_ID, quantity: 1 }],
+    line_items: [{ price: getPriceId(), quantity: 1 }],
     success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.CLIENT_URL}/dashboard`,
     customer_email: user.email,

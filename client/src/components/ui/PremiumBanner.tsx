@@ -17,7 +17,7 @@ export default function PremiumBanner({ taskCount, onUpgrade, upgrading }: Premi
           <p className="text-sm text-amber-700 mt-0.5">
             {remaining > 0
               ? `${remaining} free task${remaining !== 1 ? 's' : ''} remaining. `
-              : 'You've reached the free limit. '}
+              : "You've reached the free limit. "}
             Unlock unlimited tasks, priority labels, due dates & more.
           </p>
         </div>

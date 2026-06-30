@@ -8,4 +8,7 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16',
 })
 
-export const PREMIUM_PRICE_ID = process.env.STRIPE_PRICE_ID!
+export function getPriceId(): string {
+  if (!process.env.STRIPE_PRICE_ID) throw new Error('Missing STRIPE_PRICE_ID')
+  return process.env.STRIPE_PRICE_ID
+}

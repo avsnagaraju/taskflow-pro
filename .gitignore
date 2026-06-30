@@ -27,8 +27,9 @@ Thumbs.db
 .vscode/settings.json
 .idea/
 
-# Prisma
-server/prisma/migrations/dev.db
+# Prisma / SQLite
+server/prisma/*.db
+server/prisma/*.db-journal
 
 # Vite
 client/.vite/

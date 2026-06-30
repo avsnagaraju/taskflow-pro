@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useAuth } from '@clerk/clerk-react'
+import { useAuth } from '../context/AuthContext'
 import api from '../lib/api'
 import type { Task } from '../lib/types'
 
 export function useTasks() {
-  const { isLoaded, isSignedIn } = useAuth()
+  const { user } = useAuth()
   const [tasks, setTasks] = useState<Task[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -22,8 +22,8 @@ export function useTasks() {
   }, [])
 
   useEffect(() => {
-    if (isLoaded && isSignedIn) fetchTasks()
-  }, [isLoaded, isSignedIn, fetchTasks])
+    if (user) fetchTasks()
+  }, [user, fetchTasks])
 
   const createTask = async (payload: Partial<Task>) => {
     const { data } = await api.post<Task>('/tasks', payload)

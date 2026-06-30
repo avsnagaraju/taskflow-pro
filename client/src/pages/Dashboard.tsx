@@ -18,7 +18,6 @@ export default function Dashboard() {
 
   const isPremium = profile?.isPremium ?? false
   const canCreate = isPremium || tasks.length < FREE_LIMIT
-
   const filtered = filter === 'ALL' ? tasks : tasks.filter((t) => t.status === filter)
 
   const handleCreate = async (data: Partial<Task>) => {
@@ -62,7 +61,7 @@ export default function Dashboard() {
               className="btn-primary"
               onClick={() => setShowForm(true)}
               disabled={!canCreate}
-              title={!canCreate ? 'Upgrade to add more tasks' : undefined}
+              title={!canCreate ? 'Upgrade to Pro to add more tasks' : undefined}
             >
               + New Task
             </button>
@@ -88,7 +87,7 @@ export default function Dashboard() {
         )}
 
         {/* Filter tabs */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {(['ALL', 'TODO', 'IN_PROGRESS', 'DONE'] as const).map((s) => (
             <button
               key={s}
@@ -108,7 +107,7 @@ export default function Dashboard() {
         {filtered.length === 0 ? (
           <div className="text-center py-16 text-gray-400">
             <p className="text-4xl mb-3">📋</p>
-            <p className="font-medium">No tasks yet</p>
+            <p className="font-medium">No tasks here</p>
             <p className="text-sm mt-1">Click "+ New Task" to get started</p>
           </div>
         ) : (

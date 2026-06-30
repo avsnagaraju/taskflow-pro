@@ -18,7 +18,7 @@ export default function PremiumBanner({ taskCount, onUpgrade, upgrading }: Premi
             {remaining > 0
               ? `${remaining} free task${remaining !== 1 ? 's' : ''} remaining. `
               : "You've reached the free limit. "}
-            Unlock unlimited tasks, priority labels, due dates & more.
+            Unlock unlimited tasks, priority labels, due dates and more.
           </p>
         </div>
         <button
@@ -26,12 +26,12 @@ export default function PremiumBanner({ taskCount, onUpgrade, upgrading }: Premi
           disabled={upgrading}
           className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors shrink-0 disabled:opacity-50"
         >
-          {upgrading ? 'Redirecting...' : 'Upgrade — $4.99'}
+          {upgrading ? 'Upgrading...' : 'Upgrade — $4.99'}
         </button>
       </div>
 
-      <div className="mt-3 flex gap-4 text-xs text-amber-700">
-        {['Unlimited tasks', 'Priority labels', 'Due dates', 'Board view (coming soon)'].map((f) => (
+      <div className="mt-3 flex flex-wrap gap-4 text-xs text-amber-700">
+        {['Unlimited tasks', 'Priority labels', 'Due dates', 'Pro badge'].map((f) => (
           <span key={f} className="flex items-center gap-1">
             <span>✓</span> {f}
           </span>

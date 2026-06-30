@@ -1,20 +1,7 @@
 import axios from 'axios'
 
+// Auth header is set via api.defaults.headers.common['Authorization']
+// inside AuthContext after login/register/session restore.
 const api = axios.create({ baseURL: '/api' })
-
-// Set by AuthSync component (see App.tsx) after Clerk loads
-let _getToken: (() => Promise<string | null>) | null = null
-
-export function setTokenGetter(fn: () => Promise<string | null>) {
-  _getToken = fn
-}
-
-api.interceptors.request.use(async (config) => {
-  if (_getToken) {
-    const token = await _getToken()
-    if (token) config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
-})
 
 export default api
